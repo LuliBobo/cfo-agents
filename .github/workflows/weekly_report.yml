@@ -1,0 +1,31 @@
+name: Weekly CFO Report
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # Every Monday at 7:00 AM UTC
+  workflow_dispatch:        # Manual trigger from GitHub UI
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run CFO Agent
+        run: python cfo_agent.py
+        env:
+          GEMINI_API_KEY:   ${{ secrets.GEMINI_API_KEY }}
+          SENDER_EMAIL:     ${{ secrets.SENDER_EMAIL }}
+          SENDER_PASSWORD:  ${{ secrets.SENDER_PASSWORD }}
+          RECIPIENT_EMAIL:  ${{ secrets.RECIPIENT_EMAIL }}
+          COMPANY_NAME:     ${{ secrets.COMPANY_NAME }}
