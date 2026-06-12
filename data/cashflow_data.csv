@@ -1,0 +1,11 @@
+date,description,amount_eur,type
+2026-06-16,Client payment - Acme Corp INV-001,12500,inflow
+2026-06-17,Office rent direct debit,-4800,outflow
+2026-06-17,Supplier invoice - maintenance,-11200,outflow
+2026-06-18,Client payment - Beta GmbH INV-002,4800,inflow
+2026-06-18,VAT payment auto-debit,-18300,outflow
+2026-06-19,Subcontractor invoice - urgent,-14600,outflow
+2026-06-20,Payroll run - 18 employees,-21800,outflow
+2026-06-20,Client payment - Gamma s.r.o. INV-003,31000,inflow
+2026-06-23,Loan installment,-3200,outflow
+2026-06-24,Client payment - Delta AG INV-004,8200,inflow
