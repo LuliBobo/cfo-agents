@@ -1,0 +1,33 @@
+name: CEO Weekly Briefing
+
+on:
+  schedule:
+    - cron: '0 15 * * 5'  # Every Friday at 3:00 PM UTC (before the 4pm call)
+  workflow_dispatch:        # Manual trigger from GitHub UI
+
+jobs:
+  ceo-briefing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run CEO Dashboard Agent
+        run: python ceo_dashboard_agent.py
+        env:
+          GEMINI_API_KEY:    ${{ secrets.GEMINI_API_KEY }}
+          SENDER_EMAIL:      ${{ secrets.SENDER_EMAIL }}
+          SENDER_PASSWORD:   ${{ secrets.SENDER_PASSWORD }}
+          RECIPIENT_EMAIL:   ${{ secrets.RECIPIENT_EMAIL }}
+          COMPANY_NAME:      ${{ secrets.COMPANY_NAME }}
+          CURRENT_BALANCE:   ${{ secrets.CURRENT_BALANCE }}
+          PAYROLL_THRESHOLD: ${{ secrets.PAYROLL_THRESHOLD }}
