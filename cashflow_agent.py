@@ -28,9 +28,9 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 
 try:
-    import google.generativeai as genai
+    from google import genai
 except ImportError:
-    print("ERROR: google-generativeai not installed. Run: pip install -r requirements.txt")
+    print("ERROR: google-genai not installed. Run: pip3 install -r requirements.txt")
     exit(1)
 
 # ── Load environment variables ──────────────────────────────────
@@ -199,13 +199,18 @@ def generate_briefing(projection: list[dict], alerts: list[dict],
     print("[Step 4] Generating AI cash briefing...")
 
     if not GEMINI_API_KEY:
-        raise ValueError("GEMINI_API_KEY is not set. Check your .env file.")
+        raise ValueError(
+            "GEMINI_API_KEY is not set.\n"
+            "  → Get your free key at: https://aistudio.google.com/apikey\n"
+            "  → Then add it to your .env file: GEMINI_API_KEY=your_key_here"
+        )
 
-    genai.configure(api_key=GEMINI_API_KEY)
-    model  = genai.GenerativeModel("gemini-2.0-flash")
-    prompt = build_briefing_prompt(projection, alerts, opening, company)
-
-    response = model.generate_content(prompt)
+    client   = genai.Client(api_key=GEMINI_API_KEY)
+    prompt   = build_briefing_prompt(projection, alerts, opening, company)
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt,
+    )
     briefing = response.text.strip()
     print(f"  ✓ Briefing generated ({len(briefing.split())} words)")
     return briefing
