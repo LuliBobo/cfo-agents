@@ -1,0 +1,7 @@
+position_id,client,currency_pair,amount_foreign,booked_rate,current_rate,invoice_date
+FX-01,Iota Digital,EUR/USD,95000,1.0750,1.1100,2026-07-15
+FX-02,Kappa Logistics,EUR/GBP,42000,0.8600,0.8550,2026-07-22
+FX-03,Mu Robotics,EUR/USD,18000,1.0900,1.0870,2026-08-01
+FX-04,Nu Consulting,EUR/CHF,27000,0.9550,0.9700,2026-07-28
+FX-05,Xi Manufacturing,EUR/USD,61000,1.0800,1.1150,2026-07-19
+FX-06,Omicron Retail,EUR/GBP,15500,0.8500,0.8480,2026-08-05
