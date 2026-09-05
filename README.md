@@ -22,6 +22,35 @@ This agent runs every Monday at 7:00 AM, pulls financial data, calculates KPIs, 
 
 ---
 
+## Agent 03 — FX Monitoring Agent
+
+Reads a CSV of open FX-exposed positions (invoices billed in a foreign currency, still unpaid), compares each one's booked exchange rate against a current rate, and flags anything that has drifted past a configurable threshold — instead of waiting for month-end close to find out. No API keys, no scheduling, no infrastructure: it's a single script you run against a CSV.
+
+**From Post #9:** [The FX Loss Nobody Sees Until Month-End](https://borisdracka.com/blog/post-09)
+
+### Quick start
+
+```bash
+git clone https://github.com/LuliBobo/cfo-agents.git
+cd cfo-agents
+python fx_monitor_agent.py data/fx_positions.csv --threshold 2.0
+```
+
+Edit `data/fx_positions.csv` with your own open positions (or keep the sample data to test first). `--threshold` is the variance in percent past which a position gets flagged (default: 2.0).
+
+### What it does
+
+| Step | Action |
+|------|--------|
+| 1 | **Load** — reads open FX positions from a CSV |
+| 2 | **Compare** — booked rate vs. a current rate you supply, per position |
+| 3 | **Flag** — anything past the variance threshold |
+| 4 | **Report** — prints a summary table plus net unrealized FX variance across all open positions |
+
+This is a personal, non-commercial prototype — not connected to, and not built for, any company or client. It's an experiment in what a daily FX check would actually need to compute, nothing more.
+
+---
+
 ## Setup (30 minutes)
 
 ### Step 1 — Clone the repo
@@ -101,12 +130,15 @@ If email is not configured, the report prints to the terminal — that's fine fo
 
 ```
 cfo-agents/
-├── cfo_agent.py                      # Main agent script
+├── cfo_agent.py                      # Main agent script (Post #2)
+├── invoice_agent.py                  # Invoice/AR agent script (Post #3)
+├── fx_monitor_agent.py               # FX monitoring agent script (Post #9)
 ├── requirements.txt                  # Python dependencies
 ├── .env.example                      # Environment variable template
 ├── .gitignore
 ├── data/
-│   └── financial_data.csv            # Your monthly P&L data
+│   ├── financial_data.csv            # Monthly P&L data (Agent 01)
+│   └── fx_positions.csv              # Sample open FX positions (Agent 03)
 └── .github/
     └── workflows/
         └── weekly_report.yml         # Weekly automation schedule
@@ -118,6 +150,8 @@ cfo-agents/
 
 - Post #2: [An AI CFO Agent Is Not a Chatbot](https://borisdracka.com/blog/post-02)
 - Interactive walkthrough: [borisdracka.com/blog/post-02-demo](https://borisdracka.com/blog/post-02-demo)
+- Post #9: [The FX Loss Nobody Sees Until Month-End](https://borisdracka.com/blog/post-09)
+- Interactive walkthrough: [borisdracka.com/blog/post-09-demo](https://borisdracka.com/blog/post-09-demo)
 - Newsletter: [borisdracka.beehiiv.com](https://borisdracka.beehiiv.com/subscribe)
 - X.com: [@BorisDracka](https://x.com/BorisDracka)
 
