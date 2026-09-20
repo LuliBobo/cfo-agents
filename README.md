@@ -51,6 +51,36 @@ This is a personal, non-commercial prototype — not connected to, and not built
 
 ---
 
+## Agent 04 — Idle Cash Agent
+
+Reads a CSV of account balances, compares each one against its agreed operating buffer, and estimates what the excess sitting above that buffer could have earned if it had been swept somewhere that pays interest — instead of finding out at month-end close, if at all. Read-only by design: it only reads and reports, it never moves money or connects to a bank.
+
+**From Post #10:** [The Cash That Just Sits There](https://borisdracka.com/blog/post-10)
+
+### Quick start
+
+```bash
+git clone https://github.com/LuliBobo/cfo-agents.git
+cd cfo-agents
+python idle_cash_agent.py data/account_balances.csv --threshold 50000 --rate 3.0
+```
+
+Edit `data/account_balances.csv` with your own accounts (or keep the sample data to test first). `--threshold` is the excess-above-buffer amount in EUR past which an account gets flagged (default: 50000); `--rate` is the default alternative annual rate in percent used when a row doesn't specify its own (default: 3.0).
+
+### What it does
+
+| Step | Action |
+|------|--------|
+| 1 | **Load** — reads account balances from a CSV |
+| 2 | **Compare** — balance vs. its configured buffer, per account |
+| 3 | **Flag** — anything with more than the threshold sitting idle above buffer |
+| 4 | **Estimate** — multiplies the flagged excess by the alternative rate |
+| 5 | **Report** — prints the flagged accounts plus the estimated annual and monthly forgone interest |
+
+This is a personal, non-commercial prototype — not connected to, and not built for, any company or client. It's an experiment in what a routine balance-vs-buffer check would actually need to compute, nothing more.
+
+---
+
 ## Setup (30 minutes)
 
 ### Step 1 — Clone the repo
@@ -133,12 +163,14 @@ cfo-agents/
 ├── cfo_agent.py                      # Main agent script (Post #2)
 ├── invoice_agent.py                  # Invoice/AR agent script (Post #3)
 ├── fx_monitor_agent.py               # FX monitoring agent script (Post #9)
+├── idle_cash_agent.py                # Idle cash agent script (Post #10)
 ├── requirements.txt                  # Python dependencies
 ├── .env.example                      # Environment variable template
 ├── .gitignore
 ├── data/
 │   ├── financial_data.csv            # Monthly P&L data (Agent 01)
-│   └── fx_positions.csv              # Sample open FX positions (Agent 03)
+│   ├── fx_positions.csv              # Sample open FX positions (Agent 03)
+│   └── account_balances.csv          # Sample account balances (Agent 04)
 └── .github/
     └── workflows/
         └── weekly_report.yml         # Weekly automation schedule
@@ -152,6 +184,8 @@ cfo-agents/
 - Interactive walkthrough: [borisdracka.com/blog/post-02-demo](https://borisdracka.com/blog/post-02-demo)
 - Post #9: [The FX Loss Nobody Sees Until Month-End](https://borisdracka.com/blog/post-09)
 - Interactive walkthrough: [borisdracka.com/blog/post-09-demo](https://borisdracka.com/blog/post-09-demo)
+- Post #10: [The Cash That Just Sits There](https://borisdracka.com/blog/post-10)
+- Interactive walkthrough: [borisdracka.com/blog/post-10-demo](https://borisdracka.com/blog/post-10-demo)
 - Newsletter: [borisdracka.beehiiv.com](https://borisdracka.beehiiv.com/subscribe)
 - X.com: [@BorisDracka](https://x.com/BorisDracka)
 

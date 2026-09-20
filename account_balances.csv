@@ -1,0 +1,7 @@
+account_id,account_name,balance,buffer,alt_rate_pct
+AC-01,Operating Account,340000,150000,3.0
+AC-02,Payroll Account,85000,80000,3.0
+AC-03,VAT Reserve,60000,60000,3.0
+AC-04,Project Account,120000,40000,3.0
+AC-05,Marketing Account,45000,40000,3.0
+AC-06,Contingency Reserve,200000,200000,3.0
