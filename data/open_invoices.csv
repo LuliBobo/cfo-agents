@@ -1,0 +1,9 @@
+invoice_id,vendor,amount,due_in_days,discount_terms,critical_vendor
+INV-05,Contract Manufacturer,41000,6,,true
+INV-02,Core SaaS Platform,3200,9,,true
+INV-03,Freight Carrier,8750,1,2%/10,false
+INV-07,Utility Provider,1850,2,,false
+INV-01,Packaging Supplier,12400,3,,false
+INV-06,Marketing Agency,5100,4,,false
+INV-08,Legal Services,9300,11,,false
+INV-04,Office Supplies,640,14,,false
