@@ -22,6 +22,36 @@ This agent runs every Monday at 7:00 AM, pulls financial data, calculates KPIs, 
 
 ---
 
+## Agent 02 — Invoice Agent
+
+Reads a CSV of invoices, identifies which ones are overdue, ranks them by financial risk (amount × days overdue), and drafts a personalized reminder email per client — ready to review and send. It doesn't send anything on its own.
+
+**From Post #3:** [50 People. €15M Revenue. 1 Accountant. This Is Normal.](https://borisdracka.com/blog/post-03)
+
+### Quick start
+
+```bash
+git clone https://github.com/LuliBobo/cfo-agents.git
+cd cfo-agents
+python invoice_agent.py
+```
+
+Uses the same `.env` setup as Agent 01. Edit `data/invoices.csv` with your own invoices (or keep the sample data to test first).
+
+### What it does
+
+| Step | Action |
+|------|--------|
+| 1 | **Pull** — reads invoice data from a CSV |
+| 2 | **Detect** — identifies overdue invoices and classifies severity |
+| 3 | **Prioritize** — ranks by financial risk (amount × days overdue) |
+| 4 | **Generate** — Gemini AI drafts a personalized reminder per client |
+| 5 | **Deliver** — sends a summary report plus draft reminders to the accountant by email |
+
+This is a personal, non-commercial prototype — not connected to, and not built for, any company or client. It's an experiment in what routine AR chasing would actually need to automate, nothing more.
+
+---
+
 ## Agent 03 — FX Monitoring Agent
 
 Reads a CSV of open FX-exposed positions (invoices billed in a foreign currency, still unpaid), compares each one's booked exchange rate against a current rate, and flags anything that has drifted past a configurable threshold — instead of waiting for month-end close to find out. No API keys, no scheduling, no infrastructure: it's a single script you run against a CSV.
@@ -200,6 +230,7 @@ cfo-agents/
 ├── .gitignore
 ├── data/
 │   ├── financial_data.csv            # Monthly P&L data (Agent 01)
+│   ├── invoices.csv                  # Sample invoices (Agent 02)
 │   ├── fx_positions.csv              # Sample open FX positions (Agent 03)
 │   ├── account_balances.csv          # Sample account balances (Agent 04)
 │   └── open_invoices.csv             # Sample open invoices (Agent 05)
@@ -213,6 +244,9 @@ cfo-agents/
 ## Follow the series
 
 - Post #2: [An AI CFO Agent Is Not a Chatbot](https://borisdracka.com/blog/post-02)
+- Interactive walkthrough: [borisdracka.com/blog/post-02-demo](https://borisdracka.com/blog/post-02-demo)
+- Post #3: [50 People. €15M Revenue. 1 Accountant. This Is Normal.](https://borisdracka.com/blog/post-03)
+- Interactive walkthrough: [borisdracka.com/blog/post-03-demo](https://borisdracka.com/blog/post-03-demo)
 - Interactive walkthrough: [borisdracka.com/blog/post-02-demo](https://borisdracka.com/blog/post-02-demo)
 - Post #9: [The FX Loss Nobody Sees Until Month-End](https://borisdracka.com/blog/post-09)
 - Interactive walkthrough: [borisdracka.com/blog/post-09-demo](https://borisdracka.com/blog/post-09-demo)
