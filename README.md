@@ -81,6 +81,36 @@ This is a personal, non-commercial prototype — not connected to, and not built
 
 ---
 
+## Agent 05 — Invoice Priority Agent
+
+Reads a CSV of open invoices and prints a suggested payment order that isn't just sorted by due date. A critical-vendor flag can move an invoice ahead of an older one; a discount-window field is tracked and displayed alongside it, though this version doesn't yet factor it into the rank — see the code comments.
+
+**From Post #11:** [The Invoice That Gets Paid First Isn't the One That's Due First](https://borisdracka.com/blog/post-11)
+
+### Quick start
+
+```bash
+git clone https://github.com/LuliBobo/cfo-agents.git
+cd cfo-agents
+python invoice_priority_agent.py data/open_invoices.csv
+```
+
+Edit `data/open_invoices.csv` with your own open invoices (or keep the sample data to test first).
+
+### What it does
+
+| Step | Action |
+|------|--------|
+| 1 | **Load** — reads open invoices from a CSV |
+| 2 | **Calculate** — days remaining to each invoice's due date |
+| 3 | **Check** — discount window and critical-vendor flags per invoice |
+| 4 | **Re-rank** — critical-vendor invoices move to the front, in their own due-date order; everyone else keeps due-date order behind them |
+| 5 | **Report** — prints the suggested payment order and flags which invoices moved |
+
+This is a personal, non-commercial prototype — not connected to, and not built for, any company or client. It's an experiment in what a payment-priority check would actually need to compute, nothing more.
+
+---
+
 ## Setup (30 minutes)
 
 ### Step 1 — Clone the repo
@@ -164,13 +194,15 @@ cfo-agents/
 ├── invoice_agent.py                  # Invoice/AR agent script (Post #3)
 ├── fx_monitor_agent.py               # FX monitoring agent script (Post #9)
 ├── idle_cash_agent.py                # Idle cash agent script (Post #10)
+├── invoice_priority_agent.py         # Invoice priority agent script (Post #11)
 ├── requirements.txt                  # Python dependencies
 ├── .env.example                      # Environment variable template
 ├── .gitignore
 ├── data/
 │   ├── financial_data.csv            # Monthly P&L data (Agent 01)
 │   ├── fx_positions.csv              # Sample open FX positions (Agent 03)
-│   └── account_balances.csv          # Sample account balances (Agent 04)
+│   ├── account_balances.csv          # Sample account balances (Agent 04)
+│   └── open_invoices.csv             # Sample open invoices (Agent 05)
 └── .github/
     └── workflows/
         └── weekly_report.yml         # Weekly automation schedule
@@ -186,6 +218,8 @@ cfo-agents/
 - Interactive walkthrough: [borisdracka.com/blog/post-09-demo](https://borisdracka.com/blog/post-09-demo)
 - Post #10: [The Cash That Just Sits There](https://borisdracka.com/blog/post-10)
 - Interactive walkthrough: [borisdracka.com/blog/post-10-demo](https://borisdracka.com/blog/post-10-demo)
+- Post #11: [The Invoice That Gets Paid First Isn't the One That's Due First](https://borisdracka.com/blog/post-11)
+- Interactive walkthrough: [borisdracka.com/blog/post-11-demo](https://borisdracka.com/blog/post-11-demo)
 - Newsletter: [borisdracka.beehiiv.com](https://borisdracka.beehiiv.com/subscribe)
 - X.com: [@BorisDracka](https://x.com/BorisDracka)
 
