@@ -1,0 +1,9 @@
+customer_id,customer,amount,days_overdue,reminders_sent,credit_hold
+CUST-05,Key Account Co.,27500,20,1,true
+CUST-03,Growth-Stage Customer,4100,10,0,true
+CUST-04,Manufacturing Client,18200,95,3,false
+CUST-07,Regional Distributor,3400,80,2,false
+CUST-02,Wholesale Partner,9800,60,2,false
+CUST-08,Retail Chain,1250,45,1,false
+CUST-01,Specialty Retailer,6700,30,1,false
+CUST-06,New Customer,950,5,0,false

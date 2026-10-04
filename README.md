@@ -141,6 +141,36 @@ This is a personal, non-commercial prototype — not connected to, and not built
 
 ---
 
+## Agent 06 — Collections Priority Agent
+
+Reads a CSV of open receivables and prints a suggested collections order that isn't just sorted by days overdue. An active credit hold moves a receivable ahead of an older one; reminder history is tracked and displayed, and only changes the rank if you set a threshold. It only reports — it never sends a reminder.
+
+**From Post #12:** [The Collection Reminder That Works Isn't the First One You Send](https://borisdracka.com/blog/post-12)
+
+### Quick start
+
+```bash
+git clone https://github.com/LuliBobo/cfo-agents.git
+cd cfo-agents
+python collections_priority_agent.py data/open_receivables.csv
+```
+
+Edit `data/open_receivables.csv` with your own open receivables (or keep the sample data to test first). Optional flags: `--hold-values` (which `credit_hold` values count as an active hold) and `--reminder-threshold N` (also move receivables with N or more reminders sent to the front).
+
+### What it does
+
+| Step | Action |
+|------|--------|
+| 1 | **Load** — reads open receivables from a CSV |
+| 2 | **Rank** — by days overdue |
+| 3 | **Check** — credit-hold flag and reminder count per receivable |
+| 4 | **Re-rank** — held receivables move to the front, in their own overdue order; everyone else keeps overdue order behind them |
+| 5 | **Report** — prints the suggested collections order and flags which receivables moved |
+
+This is a personal, non-commercial prototype — not connected to, and not built for, any company or client. It's an experiment in what a collections-priority check would actually need to compute, nothing more.
+
+---
+
 ## Setup (30 minutes)
 
 ### Step 1 — Clone the repo
@@ -233,7 +263,8 @@ cfo-agents/
 │   ├── invoices.csv                  # Sample invoices (Agent 02)
 │   ├── fx_positions.csv              # Sample open FX positions (Agent 03)
 │   ├── account_balances.csv          # Sample account balances (Agent 04)
-│   └── open_invoices.csv             # Sample open invoices (Agent 05)
+│   ├── open_invoices.csv             # Sample open invoices (Agent 05)
+│   └── open_receivables.csv          # Sample open receivables (Agent 06)
 └── .github/
     └── workflows/
         └── weekly_report.yml         # Weekly automation schedule
