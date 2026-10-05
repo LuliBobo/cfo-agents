@@ -1,6 +1,6 @@
 # CFO Agents
 
-AI agents for financial reporting and analysis. Built as part of the [CFO Unfiltered](https://borisdracka.com) blog series by Boris Dračka.
+AI agents for financial reporting and analysis. Tested as part of the [CFO Unfiltered](https://borisdracka.com) blog series by Boris Dračka.
 
 ---
 
