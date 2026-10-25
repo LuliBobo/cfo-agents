@@ -171,6 +171,36 @@ This is a personal, non-commercial prototype — not connected to, and not built
 
 ---
 
+## Agent 07 — Anomaly Watch Agent
+
+Reads a CSV of payments and checks the latest week against each supplier's own history. A payment is flagged when its amount sits outside that supplier's usual band, when it repeats an earlier amount to the same supplier, or when it goes to an account that supplier hasn't used before. An unusual weekday is shown as context but never flags a payment on its own. It only reports — it never blocks, holds or sends anything.
+
+**From Post #16:** [The Payment That Didn't Look Like the Others](https://borisdracka.com/blog/post-16)
+
+### Quick start
+
+```bash
+git clone https://github.com/LuliBobo/cfo-agents.git
+cd cfo-agents
+python anomaly_watch_agent.py data/payments.csv
+```
+
+Edit `data/payments.csv` with your own payments (or keep the sample data to test first). Optional flags: `--week-start` (Monday of the week to check), `--tolerance` (how many robust spreads from the usual amount count as unusual, default 3.5), `--dup-days` (window for repeated amounts) and `--signals` (any of `amount`, `duplicate`, `account`).
+
+### What it does
+
+| Step | Action |
+|------|--------|
+| 1 | **Load** — reads payments from a CSV |
+| 2 | **Baseline** — per supplier: median amount, a robust spread, usual weekday and known accounts, from payments before the week |
+| 3 | **Check** — each payment in the week against its own supplier's baseline |
+| 4 | **Flag** — amount outside the band, repeated amount, new account; weekday shown as context |
+| 5 | **Report** — prints each flagged payment with the reasons; nothing is blocked or sent |
+
+This is a personal, non-commercial prototype built on made-up sample data — not connected to, and not built for, any company or client. It is not fraud prevention or security advice; it's an experiment in what a "normal week" check would actually need to compute.
+
+---
+
 ## Setup (30 minutes)
 
 ### Step 1 — Clone the repo
@@ -264,7 +294,8 @@ cfo-agents/
 │   ├── fx_positions.csv              # Sample open FX positions (Agent 03)
 │   ├── account_balances.csv          # Sample account balances (Agent 04)
 │   ├── open_invoices.csv             # Sample open invoices (Agent 05)
-│   └── open_receivables.csv          # Sample open receivables (Agent 06)
+│   ├── open_receivables.csv          # Sample open receivables (Agent 06)
+│   └── payments.csv                  # Sample payments, 9 weeks (Agent 07)
 └── .github/
     └── workflows/
         └── weekly_report.yml         # Weekly automation schedule
